@@ -14,8 +14,8 @@ int main (int argc, char* argv[]) {
     name = argv[1];
   }
                  
-   
-  std::cout << "Hello " << name << std::endl;
+  std::cout << "Future: Hello " << name << std::endl;
+  
   return 0;
 }
 
