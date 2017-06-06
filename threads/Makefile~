@@ -1,0 +1,13 @@
+
+CXXFLAGS = -std=c++11 -pedantic -Wall -Werror -pthread
+default: build
+clean:
+	rm -f threads
+
+build: threads
+
+build-threads: threads
+
+run-threads: build-threads
+	./threads
+
