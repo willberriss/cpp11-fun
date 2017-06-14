@@ -8,7 +8,13 @@ using namespace std;
 int accum = 0;
 
 void addMoney(int x) {
-    //this_thread::sleep_for(chrono::milliseconds(100*x));
+    
+    // 
+    // It's a race to increment the shared global
+    // variable accum and we deliberately increment
+    // it 1 by 1 so as to access it a lot increasing 
+    // the chance of each thread treading on anothers toes
+    //
     for (int m=0; m<x; ++m) {
         accum++;
     }
@@ -16,6 +22,12 @@ void addMoney(int x) {
 
 int spawnThreads() {
     vector<thread> ths;
+
+    // 
+    // Add 1000 quid 20 times using 20 threads
+    // it's a race to increment the shared global
+    // variable accum
+    //
     for (int i = 1; i <= 20; ++i) {
         ths.push_back(thread(&addMoney, 1000));
     }
@@ -23,13 +35,17 @@ int spawnThreads() {
     for (auto& th : ths) {
         th.join();
     }
+
+    // Ideally returns 20000
     return accum;
 }
 
 int main() {
 
     int val=0;
-    for (int c=0; c<200; ++c) {
+
+    // Do the same experiment 150 times, a few will fail
+    for (int c=0; c<150; ++c) {
         accum = 0;
         if ((val = spawnThreads()) != 20000) {
             cout << "Error at count=" << c << " value=" << val 

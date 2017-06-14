@@ -1,5 +1,4 @@
 #include <iostream>
-#include <cmath>
 #include <thread>
 using namespace std;
 
